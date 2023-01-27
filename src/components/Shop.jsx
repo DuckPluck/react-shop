@@ -3,44 +3,84 @@ import {API_KEY, API_URL} from '../config';
 
 import {Preloader} from './Preloader';
 import {GoodsList} from './GoodsList';
-import { Cart } from './Cart'
-import { BasketList } from './BasketList'
+import {Cart} from './Cart';
+import {BasketList} from './BasketList';
 
 export function Shop() {
   const [goods, setGoods] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [order, setOrder] = useState([])
-  const [isBasketShow, setBasketShow] = useState(false)
+  const [order, setOrder] = useState([]);
+  const [isBasketShow, setBasketShow] = useState(false);
+
+  const incrementQuantity = (id) => {
+    const newOrder = order.map((el) => {
+      if (el.id === id) {
+        const newQuantity = el.quantity + 1;
+        return {
+          ...el,
+          quantity: newQuantity,
+        };
+      } else {
+        return el;
+      }
+    });
+
+    setOrder(newOrder);
+  };
+
+  const decrementQuantity = (id) => {
+    const newOrder = order.map((el) => {
+      if (el.id === id) {
+        const newQuantity = el.quantity - 1;
+        return {
+          ...el,
+          quantity: newQuantity,
+        };
+      } else {
+        return el;
+      }
+    });
+
+    setOrder(newOrder);
+  };
 
   const addToBasket = (item) => {
-    const itemIndex = order.findIndex((orderItem) => orderItem.id === item.id)
+    const itemIndex = order.findIndex((orderItem) => orderItem.id === item.id);
 
     if (itemIndex < 0) {
       const newItem = {
         ...item,
         quantity: 1,
-      }
+      };
 
-      setOrder([...order, newItem])
+      setOrder([...order, newItem]);
     } else {
       const newOrder = order.map((orderItem, index) => {
         if (index === itemIndex) {
           return {
             ...orderItem,
             quantity: orderItem.quantity + 1,
-          }
+          };
         } else {
-          return orderItem
+          return orderItem;
         }
-      })
+      });
 
-      setOrder(newOrder)
+      setOrder(newOrder);
     }
-  }
+  };
+
+  const deleteBasketItem = (id) => {
+    setOrder(
+        order.filter((el) => {
+          return el.id !== id;
+        }),
+    );
+  };
 
   const handleBasketShow = () => {
-    setBasketShow(!isBasketShow)
-  }
+    setBasketShow(!isBasketShow);
+  };
 
   useEffect(function getGoods() {
     fetch(API_URL, {
@@ -56,14 +96,22 @@ export function Shop() {
   }, []);
 
   useEffect(() => {
-    console.log(order)
-  }, [order])
+    console.log(order);
+  }, [order]);
 
   return (
       <main className="container content">
-        <Cart quantity={order.length} handleBasketShow={handleBasketShow} />
-        {loading ? <Preloader /> : <GoodsList addToBasket={addToBasket} goods={goods} />}
-        {isBasketShow && <BasketList order={order} handleBasketShow={handleBasketShow} />}
+        <Cart quantity={order.length} handleBasketShow={handleBasketShow}/>
+        {loading ? <Preloader/> : <GoodsList addToBasket={addToBasket} goods={goods}/>}
+        {isBasketShow && (
+            <BasketList
+                deleteBasketItem={deleteBasketItem}
+                order={order}
+                handleBasketShow={handleBasketShow}
+                incrementQuantity={incrementQuantity}
+                decrementQuantity={decrementQuantity}
+            />
+        )}
       </main>
   );
 }

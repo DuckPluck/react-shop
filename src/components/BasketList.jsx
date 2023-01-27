@@ -2,7 +2,13 @@ import React from 'react';
 
 import {BasketItem} from './BasketItem';
 
-export function BasketList({order, handleBasketShow}) {
+export function BasketList({
+                             order,
+                             handleBasketShow,
+                             deleteBasketItem,
+                             incrementQuantity,
+                             decrementQuantity,
+                           }) {
   const totalPrice = order.reduce((acc, el) => {
     return acc + el.price * el.quantity;
   }, 0);
@@ -11,7 +17,15 @@ export function BasketList({order, handleBasketShow}) {
       <ul className="collection basket-list">
         <li className="collection-item active">Basket</li>
         {order.length ? (
-            order.map((el) => <BasketItem key={el.id} {...el} />)
+            order.map((el) => (
+                <BasketItem
+                    decrementQuantity={decrementQuantity}
+                    incrementQuantity={incrementQuantity}
+                    deleteBasketItem={deleteBasketItem}
+                    key={el.id}
+                    {...el}
+                />
+            ))
         ) : (
             <li className="collection-item">Basket is empty</li>
         )}
