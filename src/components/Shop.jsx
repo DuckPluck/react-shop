@@ -5,12 +5,14 @@ import {Preloader} from './Preloader';
 import {GoodsList} from './GoodsList';
 import {Cart} from './Cart';
 import {BasketList} from './BasketList';
+import {Alert} from './Alert';
 
 export function Shop() {
   const [goods, setGoods] = useState([]);
   const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState([]);
   const [isBasketShow, setBasketShow] = useState(false);
+  const [alertName, setAlertName] = useState('');
 
   const incrementQuantity = (id) => {
     const newOrder = order.map((el) => {
@@ -68,6 +70,7 @@ export function Shop() {
 
       setOrder(newOrder);
     }
+    setAlertName(item.name);
   };
 
   const deleteBasketItem = (id) => {
@@ -82,6 +85,10 @@ export function Shop() {
     setBasketShow(!isBasketShow);
   };
 
+  const closeAlert = () => {
+    setAlertName('');
+  };
+
   useEffect(function getGoods() {
     fetch(API_URL, {
       headers: {
@@ -90,14 +97,12 @@ export function Shop() {
     })
         .then((res) => res.json())
         .then((data) => {
+          console.log(API_KEY);
+          console.log(data);
           data.featured && setGoods(data.featured);
           setLoading(false);
         });
   }, []);
-
-  useEffect(() => {
-    console.log(order);
-  }, [order]);
 
   return (
       <main className="container content">
@@ -112,6 +117,7 @@ export function Shop() {
                 decrementQuantity={decrementQuantity}
             />
         )}
+        {alertName && <Alert name={alertName} closeAlert={closeAlert}/>}
       </main>
   );
 }

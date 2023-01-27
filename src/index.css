@@ -45,8 +45,7 @@ code {
 
     cursor: pointer;
     z-index: 5;
-    padding: 1rem;
-    padding-bottom: 0.7rem;
+    padding: 1rem 1rem 0.7rem;
 }
 
 @media (min-width: 767px) {
@@ -99,4 +98,20 @@ code {
     cursor: pointer;
     vertical-align: middle;
     color: #26a69a;
+}
+
+#toast-container {
+    top: 3rem !important;
+    animation: fade-in 250ms ease-in-out;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(2rem);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0rem);
+    }
 }

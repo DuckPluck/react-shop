@@ -36,7 +36,7 @@ export function BasketItem({
                 })
             }>
         {' '}
-          plus
+          V-Bucks
       </span>
         <span onClick={() => deleteBasketItem(id)} className="secondary-content">
         <i className="material-icons basket-delete">close</i>
