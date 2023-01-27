@@ -55,7 +55,39 @@ code {
     }
 }
 
+.collection {
+    margin-top: 0;
+    border: 0;
+}
+
+.collection-item {
+    min-width: 600px;
+}
+
+.collection-item {
+    min-width: 600px;
+    z-index: 7;
+}
+
+.collection-item active{
+    margin-bottom: -1000px;
+
+}
+
 .basket-list {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgb(0, 0, 0, 0.4);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+}
+
+.basket-list__content {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -72,11 +104,14 @@ code {
 }
 
 .basket-close {
+    height: 100vh;
+    width: 100vw;
     cursor: pointer;
     position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
+    top: 0.1rem;
+    right: 0.1rem;
     color: #fff;
+    z-index: 6;
 }
 
 .basket-delete {
