@@ -29,6 +29,11 @@ code {
     gap: 1rem;
 }
 
+.good-price {
+    font-size: 1.5rem;
+}
+
+
 .card {
     display: flex;
     flex-direction: column;
@@ -73,6 +78,8 @@ code {
     margin-bottom: -1000px;
 
 }
+
+
 
 .basket-list {
     height: 100vh;
